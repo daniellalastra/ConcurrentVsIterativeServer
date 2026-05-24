@@ -1,0 +1,31 @@
+Project 1 - Phase 1
+1. State Analysis
+The server type is stateful and the state type is session state. It must remember to use the countdown progress for each individual client. 
+
+2. Three-Tier Architecture 
+Presentation Tier: 
+CountdownClient.java files - this is both iterative as well as concurrent
+- this connects to the server, sends the numbers, and displays the countdown messages
+
+Application Tier: 
+CountdownProtocol.java - this contains a countdown for all business logic 
+In this tier the session state and countdown sequences are managed
+
+Data Tier: 
+The session state is maintained in CountdownProtocol instances from the application tier. The current countdown value for each client session is stored here. 
+
+3. Iterative vs Concurrent Servers
+
+Iterative Server:
+ -IterativeServer.java
+This handles one client at a time with a simple implementation that uses a single thread. The c client will wait in a queue if the server is busy since only one can be handled at a time. It is used when it comes to a simple application with low traffic. 
+
+Concurrent Server:
+ -ConcurrentServer.java
+This on the other hand handles multiple clients simultaneously. This is done by using threads (ClientHandler + thread pool), where each client will get a dedicated thread. It is used when there is high traffic and a responsive application. 
+
+Testing:
+Both of my implementations correctly implemented the countdown protocol: 
+  - the client sends an integer n 
+  - the server will then respond with n, n-1, n-2, ..., 1
+  - the connection than terminates after the whole countdown is completed
